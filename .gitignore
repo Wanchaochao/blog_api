@@ -1,0 +1,8 @@
+/pkg
+/bin
+/.cache
+.idea
+.DS_Store
+src/app/storage/
+src/app/app
+src/app/bin/
