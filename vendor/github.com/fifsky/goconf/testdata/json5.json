@@ -1,0 +1,8 @@
+{
+  //this is mysql config demo
+  "database": {
+    "driver": "mysql",
+    "host": "localhost", //localhost
+    "port": 3306 //port
+  }
+}

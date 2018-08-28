@@ -1,0 +1,30 @@
+{
+  "name": {
+    "first": "Tom",
+    "last": "Anderson"
+  },
+  "age": 37,
+  "children": [
+    "Sara", //comment1
+    "Alex", //comment2
+    "Jack"
+  ],
+  "fav.movie": "Deer Hunter",
+  "friends": [
+    {
+      "first": "Dale",
+      "last": "Murphy",
+      "age": 44
+    },
+    {
+      "first": "Roger",
+      "last": "Craig",
+      "age": 68
+    },
+    {
+      "first": "Jane",
+      "last": "Murphy",
+      "age": 47
+    }
+  ]
+}
