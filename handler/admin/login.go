@@ -1,6 +1,6 @@
 package admin
 
-import "app/core"
+import "blog/core"
 
 var LoginPost core.HandlerFunc = func(c *core.Context) core.Response {
 

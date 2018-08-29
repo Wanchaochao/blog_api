@@ -1,11 +1,11 @@
 package router
 
 import (
-	"app/core"
-	"app/router/middleware"
-	"app/debug"
+	"blog/core"
+	"blog/router/middleware"
+	"blog/debug"
 	"github.com/gin-gonic/gin"
-	"app/handler/admin"
+	"blog/handler/admin"
 )
 
 func Route(router *gin.Engine) {

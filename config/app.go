@@ -11,7 +11,7 @@ import (
 	"github.com/verystar/golib/debug"
 	"github.com/verystar/logger"
 	"fmt"
-	"app/util"
+	"blog/util"
 )
 
 type common struct {
@@ -24,16 +24,16 @@ type common struct {
 	Token 		string `json:"token"`
 }
 
-type slbConfig struct {
-	AccessKeyId     string `json:"access_key_id"`
-	AccessKeySecret string `json:"access_key_secret"`
-	RegionId        string `json:"region_id"`
-}
+//type slbConfig struct {
+//	AccessKeyId     string `json:"access_key_id"`
+//	AccessKeySecret string `json:"access_key_secret"`
+//	RegionId        string `json:"region_id"`
+//}
 
 type app struct {
 	Common    common        `conf:"common"`
 	Log       logger.Config `conf:"log"`
-	Slb       slbConfig     `conf:"slb"`
+	//Slb       slbConfig     `conf:"slb"`
 	StartTime time.Time
 }
 
@@ -57,7 +57,8 @@ func Load(args map[string]string) {
 		//获得程序路径从里面获取到app的路径
 		execpath, err := os.Getwd()
 		if err == nil {
-			appPath = execpath[0 : strings.Index(execpath, "src/app")+7]
+			src := "src/blog" // 项目目录
+			appPath = execpath[0 : strings.Index(execpath, src)+ len(src)]
 		}
 	}
 

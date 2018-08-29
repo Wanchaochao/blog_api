@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"app/config"
-	"app/core"
+	"blog/config"
+	"blog/core"
 )
 
 var Token core.HandlerFunc = func(c *core.Context) core.Response {

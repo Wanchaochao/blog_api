@@ -2,8 +2,8 @@ package main
 
 import (
 	_ "github.com/go-sql-driver/mysql"
-	_ "app/config"
-	"app/server"
+	_ "blog/config"
+	"blog/server"
 )
 
 func main() {
