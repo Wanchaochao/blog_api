@@ -12,6 +12,7 @@ import (
 	"github.com/verystar/logger"
 	"fmt"
 	"blog/util"
+	"github.com/ilibs/gosql"
 )
 
 type common struct {
@@ -21,7 +22,7 @@ type common struct {
 	Debug       string `json:"debug"`
 	StatDB      string `json:"stat_db"`
 	Port        string `json:"port"`
-	Token 		string `json:"token"`
+	Token       string `json:"token"`
 }
 
 //type slbConfig struct {
@@ -31,10 +32,11 @@ type common struct {
 //}
 
 type app struct {
-	Common    common        `conf:"common"`
-	Log       logger.Config `conf:"log"`
-	//Slb       slbConfig     `conf:"slb"`
+	Common    common                  `conf:"common"`
+	Log       logger.Config           `conf:"log"`
+	Db        map[string]*gosql.Config `conf:"database"`
 	StartTime time.Time
+	//Slb       slbConfig     `conf:"slb"`
 }
 
 var App = &app{
@@ -58,7 +60,7 @@ func Load(args map[string]string) {
 		execpath, err := os.Getwd()
 		if err == nil {
 			src := "src/blog" // 项目目录
-			appPath = execpath[0 : strings.Index(execpath, src)+ len(src)]
+			appPath = execpath[0 : strings.Index(execpath, src)+len(src)]
 		}
 	}
 
@@ -92,7 +94,6 @@ func Load(args map[string]string) {
 		//log model
 		App.Log.LogMode = "std"
 	}
-
 
 	logger.Setting(func(c *logger.Config) {
 		c.LogMode = App.Log.LogMode

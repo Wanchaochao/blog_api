@@ -6,10 +6,8 @@ import (
 )
 
 var Token core.HandlerFunc = func(c *core.Context) core.Response {
-	token := c.PostForm("token")
-	if token == "" {
-		token = c.Query("token")
-	}
+	token := c.Request.Header.Get("Access-Token")
+
 	if token != config.App.Common.Token {
 		return c.Fail(201,"token error!")
 	}
