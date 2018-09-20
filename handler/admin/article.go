@@ -5,7 +5,6 @@ import (
 	"blog/models"
 	"strconv"
 	"github.com/ilibs/gosql"
-	"log"
 )
 
 // 文章列表
@@ -18,8 +17,7 @@ var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	keyword := c.DefaultQuery("keyword","")
 	startTime := c.DefaultQuery("start_time","")
 	endTime := c.DefaultQuery("start_time","")
-	log.Print("article list begin")
-	articleList,err := models.GetArticleList(article,page,1,keyword,startTime,endTime)
+	articleList,err := models.GetArticleList(article,page,10,keyword,startTime,endTime)
 	if err != nil {
 		return c.Fail(203,err)
 	}
