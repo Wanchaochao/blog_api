@@ -6,17 +6,36 @@ import (
 	"blog/debug"
 	"github.com/gin-gonic/gin"
 	"blog/handler/admin"
-	"github.com/gin-contrib/cors"
 )
 
-
+//var allowOrigins = map[string]bool{
+//	"http://admin.littlebug.vip":  true,
+//	"https://admin.littlebug.vip": true,
+//	"http://localhost:8080":       true,
+//}
 
 func Route(router *gin.Engine) {
 	//设置模板
 	//core.SetTemplate(router)
 
 	// 跨域
-	router.Use(cors.Default())
+	//router.Use(cors.New(cors.Config{
+	//	AllowOrigins: []string{"*"},
+	//	AllowOriginFunc: func(origin string) bool {
+	//		return allowOrigins[origin]
+	//	},
+	//
+	//	AllowMethods: []string{"*"},
+	//	AllowHeaders: []string{
+	//		"Origin",
+	//		"Content-Length",
+	//		"Content-Type",
+	//		"Access-Token",
+	//		"Access-Control-Allow-Origin",
+	//	},
+	//	AllowCredentials: false,
+	//	MaxAge:           12 * time.Hour,
+	//}))
 
 	//中间件token验证
 	router.Use(middleware.Ginrus())
