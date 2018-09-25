@@ -42,7 +42,7 @@ func Route(router *gin.Engine) {
 	router.Use(middleware.Ginrus())
 
 	//登录
-	router.POST("/login", core.Handle(admin.LoginPost))
+	router.Any("/login", core.Handle(admin.LoginPost))
 
 	//后台
 	blogAdmin := router.Group("/adm")
