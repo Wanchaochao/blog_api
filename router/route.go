@@ -13,7 +13,7 @@ import (
 var allowOrigins = map[string]bool{
 	"http://admin.littlebug.vip":  true,
 	"https://admin.littlebug.vip": true,
-	//"http://localhost:8080":       true,
+	"http://localhost:8080":       true,
 }
 
 func Route(router *gin.Engine) {
