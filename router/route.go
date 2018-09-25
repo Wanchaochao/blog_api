@@ -34,7 +34,7 @@ func Route(router *gin.Engine) {
 			"Access-Token",
 			"Access-Control-Allow-Origin",
 		},
-		AllowCredentials: true,
+		AllowCredentials: false,
 		MaxAge:           12 * time.Hour,
 	}))
 
