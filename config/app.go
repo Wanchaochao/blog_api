@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/gin-gonic/gin"
 	"log"
 	"os"
 	"path/filepath"
@@ -51,6 +52,7 @@ func init() {
 func Load(args map[string]string) {
 	env := os.Getenv("APP_ENV")
 	if env == "" {
+		gin.SetMode(gin.ReleaseMode)
 		env = "prod"
 	}
 
