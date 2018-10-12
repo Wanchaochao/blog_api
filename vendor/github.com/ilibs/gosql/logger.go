@@ -41,6 +41,10 @@ func (q *QueryStatus) String() string {
 		lines = append(lines, fmt.Sprintf(fmtLogQuery, query))
 	}
 
+	if args, ok := q.Args.([]interface{}); ok && len(args) == 0 {
+		q.Args = nil
+	}
+
 	if q.Args != nil {
 		lines = append(lines, fmt.Sprintf(fmtLogArgs, q.Args))
 	}
@@ -80,4 +84,9 @@ var logger = &defaultLogger{log: log.New(os.Stderr, "", log.LstdFlags)}
 
 func SetLogger(l Logger) {
 	logger.log = l
+}
+
+//SetLogging set default logger
+func SetLogging(logging bool) {
+	logger.logging = logging
 }

@@ -2,10 +2,10 @@ package router
 
 import (
 	"blog/core"
-	"blog/router/middleware"
 	"blog/debug"
-	"github.com/gin-gonic/gin"
 	"blog/handler/admin"
+	"blog/router/middleware"
+	"github.com/gin-gonic/gin"
 )
 
 //var allowOrigins = map[string]bool{

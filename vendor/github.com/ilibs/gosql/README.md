@@ -221,6 +221,104 @@ gosql.Use("db2").Table("users").Where("id = ?", 1).Count()
 gosql.Table("users",tx).Where("id = ?", 1}).Count()
 ```
 
+
+## sql.Null*
+Now Model support sql.Null* field's, Note, however, that if sql.Null* is also filtered by zero values,For example
+
+```go
+type Users struct {
+	Id          int            `db:"id"`
+	Name        string         `db:"name"`
+	Email       string         `db:"email"`
+	Status      int            `db:"status"`
+	SuccessTime sql.NullString `db:"success_time" json:"success_time"`
+	CreatedAt   time.Time      `db:"created_at" json:"created_at"`
+	UpdatedAt   time.Time      `db:"updated_at" json:"updated_at"`
+}
+
+user := &Users{
+    Id: 1,
+    SuccessTime: sql.NullString{
+        String: "2018-09-03 00:00:00",
+        Valid:  false,
+    }
+}
+
+err := Model(user).Get()
+```
+
+Builder SQL:
+
+```
+Query: SELECT * FROM users WHERE (id=?);
+Args:  []interface {}{1}
+Time:  0.00082s
+```
+
+If `sql.NullString` of `Valid` attribute is false, SQL builder will ignore this zero value
+
+
+## Hooks
+Hooks are functions that are called before or after creation/querying/updating/deletion.
+
+If you have defiend specified methods for a model, it will be called automatically when creating, updating, querying, deleting, and if any callback returns an error, `gosql` will stop future operations and rollback current transaction.
+
+```
+// begin transaction
+BeforeChange
+BeforeCreate
+// update timestamp `CreatedAt`, `UpdatedAt`
+// save
+AfterCreate
+AfterChange
+// commit or rollback transaction
+```
+Example:
+
+```go
+func (u *Users) BeforeCreate() (err error) {
+  if u.IsValid() {
+    err = errors.New("can't save invalid data")
+  }
+  return
+}
+
+func (u *Users) AfterCreate(tx *sqlx.tx) (err error) {
+  if u.Id == 1 {
+    u.Email = "after@test.com"
+    Model(u,tx).Update()
+  }
+  return
+}
+```
+
+> BeforeChange and AfterChange only  used in create/update/delete
+
+All Hooks:
+
+```
+BeforeChange
+AfterChange
+BeforeCreate
+AfterCreate
+BeforeUpdate
+AfterUpdate
+BeforeDelete
+AfterDelete
+BeforeFind
+AfterFind
+```
+
+Hook func type supports multiple ways:
+
+```
+func (u *Users) BeforeCreate()
+func (u *Users) BeforeCreate() (err error)
+func (u *Users) BeforeCreate(tx *sqlx.Tx)
+func (u *Users) BeforeCreate(tx *sqlx.Tx) (err error)
+```
+
+
 ## Thanks
 
 sqlx https://github.com/jmoiron/sqlx

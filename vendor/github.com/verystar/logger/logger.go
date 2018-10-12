@@ -38,10 +38,12 @@ func Setting(option func(*Config)) {
 	std = newLogger(defaultConfig)
 }
 
-func NewLogger(option func(*Config)) ILogger {
+func NewLogger(options ...func(*Config)) ILogger {
 	//copy default config
 	conf := *defaultConfig
-	option(&conf)
+	for _, option := range options {
+		option(&conf)
+	}
 	return newLogger(&conf)
 }
 

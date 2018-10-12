@@ -5,10 +5,12 @@
 ```
 make
 
-./app http -addr=:8081
+nohup ./app http -addr=:8083 > /var/log/blog_api.log &
 
 ```
 
 环境变量什么的就不一一说了
+
+
 
 

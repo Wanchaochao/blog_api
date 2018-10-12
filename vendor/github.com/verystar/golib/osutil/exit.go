@@ -11,9 +11,6 @@ var showdownFns [] func(os.Signal)
 var l = &sync.Mutex{}
 
 func WaitSignal(sigs ...os.Signal) {
-	if len(sigs) == 0 {
-	}
-
 	stopSignals := make(chan os.Signal, 1)
 	if len(sigs) == 0 {
 		signal.Notify(stopSignals, syscall.SIGINT, syscall.SIGTERM)
@@ -31,6 +28,6 @@ func WaitSignal(sigs ...os.Signal) {
 
 func RegisterShutDown(fn func(os.Signal)) {
 	l.Lock()
+	defer l.Unlock()
 	showdownFns = append(showdownFns, fn)
-	l.Unlock()
 }

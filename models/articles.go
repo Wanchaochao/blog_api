@@ -1,9 +1,10 @@
 package models
 
 import (
-	"time"
 	"github.com/ilibs/gosql"
+	"github.com/verystar/golib/pagination"
 	"log"
+	"time"
 )
 
 type Articles struct {
@@ -29,16 +30,23 @@ func (a *Articles) PK() string {
 	return "id"
 }
 
+type ArticleResp struct {
+	List []*ArticleList `json:"list"`
+	Total int `json:"total"`
+	Current int `json:"current"`
+}
+
 type ArticleList struct {
 	Articles
 	Category string `db:"name"`
 }
 
-func GetArticleList(article *Articles, start int, num int, keyword string, startTime string, endTime string) ([]*ArticleList, error) {
+
+func GetArticleList(article *Articles, page int, num int, keyword string, startTime string, endTime string) (*ArticleResp, error) {
 	var articles = make([]*ArticleList, 0)
-	start = (start - 1) * num
+	start := (page - 1) * num
 	args := make([]interface{}, 0)
-	where := " where 1 = 1 "
+	where := " 1 = 1 "
 
 	if article.Id > 0 {
 		where += " and a.id = ? "
@@ -59,14 +67,16 @@ func GetArticleList(article *Articles, start int, num int, keyword string, start
 		where += " and a.created_at between ? and ? "
 		args = append(args, startTime, endTime)
 	}
-
-	args = append(args, start, num)
-	log.Print("sql begin")
-	rows, err := gosql.Queryx("select a.*,c.name from articles a left join category c on c.id = a.category_id "+where+" order by a.id desc limit ?,?", args...)
+	total, err := gosql.Model(&Articles{}).Where(where,args...).Count()
 	if err != nil {
 		return nil, err
 	}
-
+	args = append(args, start, num)
+	log.Print("sql begin")
+	rows, err := gosql.Queryx("select a.*,c.name from articles a left join category c on c.id = a.category_id  where "+where+" order by a.id desc limit ?,?", args...)
+	if err != nil {
+		return nil, err
+	}
 	for rows.Next() {
 		v := &ArticleList{}
 		err := rows.StructScan(v)
@@ -75,5 +85,7 @@ func GetArticleList(article *Articles, start int, num int, keyword string, start
 		}
 		articles = append(articles, v)
 	}
-	return articles, nil
+	pages := pagination.New(int(total), num, page, 5)
+
+	return &ArticleResp{articles,pages.Total(),0}, nil
 }

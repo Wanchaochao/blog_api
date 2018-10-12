@@ -14,6 +14,22 @@ import (
 	"github.com/verystar/golib/color"
 )
 
+
+var (
+	debugFlag = "off"
+	printTag  = ""
+	savePath  = "./debug/"
+)
+
+func Open(flag, tag string) {
+	debugFlag = flag
+	printTag = tag
+}
+
+func SavePath(p string) {
+	savePath = p
+}
+
 type DebugTagData struct {
 	Key     string
 	Data    interface{}
@@ -24,7 +40,7 @@ type DebugTagData struct {
 type DebugTag struct {
 	t    time.Time
 	data []DebugTagData
-	mu sync.RWMutex
+	mu   sync.RWMutex
 }
 
 func NewDebugTag(options ...func(*DebugTag)) *DebugTag {
@@ -93,7 +109,7 @@ func (d *DebugTag) Save(dir string, format string, prefix ...string) error {
 
 	now := time.Now()
 	s := now.Format(format)
-	filename := strings.TrimRight(savePath, "/") + "/" + dir + "/" + pre + s + ".log"
+	filename := filepath.Join(savePath, dir, pre+s+".log")
 	//buf , err := json.Marshal(d.data)
 	buf, err := json.MarshalIndent(d.data, "", "    ")
 	if err != nil {
