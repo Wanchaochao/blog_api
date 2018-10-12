@@ -1,14 +1,14 @@
 build:
-	/usr/bin/env bash make.sh
-back:
-	/usr/bin/env bash make.sh back $(version)
-version:
-	/usr/bin/env bash make.sh version
-list:
-	/usr/bin/env bash make.sh list
-publish:
-	/usr/bin/env bash make.sh publish
+	go build -o app main.go
+
+stop:
+	cat blog.pid | xargs kill
+
+start:
+	./app http -addr=:8083 > /var/log/blog_api.log &
+
+restart:
+	cat blog.pid | xargs kill
+	./app http -addr=:8083 > /var/log/blog_api.log &
 test:
-	/usr/bin/env bash make.sh test
-upgrade:
-	/usr/bin/env bash make.sh upgrade
+	go test ./...
