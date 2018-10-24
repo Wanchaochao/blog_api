@@ -42,7 +42,8 @@ func Route(router *gin.Engine) {
 
 	//登录
 	router.Any("adm/login", core.Handle(admin.LoginPost))
-
+	// 滑块验证码
+	router.GET("adm/captcha", core.Handle(admin.Captcha))
 	//后台
 	blogAdmin := router.Group("/adm")
 	blogAdmin.Use(core.Middware(middleware.Token))
@@ -59,7 +60,6 @@ func Route(router *gin.Engine) {
 		blogAdmin.GET("/categories", core.Handle(admin.Categories))
 		//blogAdmin.GET("/deleteCategory",core.Handle(admin.DeleteCategory)) // 删
 		blogAdmin.GET("/createCategory", core.Handle(admin.CreateCategory)) // 增
-
 	}
 
 	//debug handler

@@ -6,11 +6,7 @@ import (
 	"github.com/ilibs/gosql"
 )
 
-var ArticleListResp struct {
-	models.ArticleList
-}
-
-type PageJson struct{
+type PageJson struct {
 	Page int `json:"page"`
 }
 
