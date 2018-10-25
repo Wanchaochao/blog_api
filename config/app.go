@@ -8,12 +8,12 @@ import (
 	"strings"
 	"time"
 
+	"blog/util"
+	"fmt"
 	"github.com/fifsky/goconf"
+	"github.com/ilibs/gosql"
 	"github.com/verystar/golib/debug"
 	"github.com/verystar/logger"
-	"fmt"
-	"blog/util"
-	"github.com/ilibs/gosql"
 )
 
 type common struct {
@@ -33,8 +33,8 @@ type common struct {
 //}
 
 type app struct {
-	Common    common                  `conf:"common"`
-	Log       logger.Config           `conf:"log"`
+	Common    common                   `conf:"common"`
+	Log       logger.Config            `conf:"log"`
 	Db        map[string]*gosql.Config `conf:"database"`
 	StartTime time.Time
 	//Slb       slbConfig     `conf:"slb"`
@@ -61,7 +61,7 @@ func Load(args map[string]string) {
 		//获得程序路径从里面获取到app的路径
 		execpath, err := os.Getwd()
 		if err == nil {
-			src := "src/blog" // 项目目录
+			src := "src/blog_api" // 项目目录
 			appPath = execpath[0 : strings.Index(execpath, src)+len(src)]
 		}
 	}
