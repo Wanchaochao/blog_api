@@ -44,7 +44,7 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	f := map[string]interface{}{}
 	json.Unmarshal(result, &f)
 	log.Println("ffff!!!", f)
-	if f["response"] != 1 {
+	if f["response"] != "1" {
 		return c.Fail(206, f["err_msg"])
 	}
 	resp.Body.Close()
