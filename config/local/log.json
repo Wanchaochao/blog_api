@@ -1,8 +1,8 @@
-//{
-//    "log_mode": "std",
-//    "log_level": "debug",
-//    "log_max_files": 15,
-//    "log_sentry_dsn": "",
-//    "log_sentry_type": "go.example",
-//    "log_detail":true
-//}
+{
+    "log_mode": "std",
+    "log_level": "debug",
+    "log_max_files": 15,
+    "log_sentry_dsn": "",
+    "log_sentry_type": "go.example",
+    "log_detail":true
+}
