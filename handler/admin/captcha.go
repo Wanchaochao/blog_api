@@ -32,6 +32,7 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	q.Set("UserIP", c.ClientIP())
 	log.Println("Ip:", c.ClientIP())
 	resp, err := http.Get(u.String())
+	log.Println("url::", u.String())
 	if err != nil {
 		return c.Fail(204, err)
 	}
