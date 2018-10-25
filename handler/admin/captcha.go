@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 type CaptchaRequestJson struct {
@@ -43,7 +44,8 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	}
 	f := map[string]interface{}{}
 	json.Unmarshal(result, &f)
-	log.Println("ffff!!!", f)
+	log.Println("result::", f)
+	log.Println("response type::", reflect.TypeOf(f["response"]))
 	if f["response"] != "1" {
 		return c.Fail(206, f["err_msg"])
 	}
