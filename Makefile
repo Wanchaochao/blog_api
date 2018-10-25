@@ -1,5 +1,4 @@
 build:
-    git pull origin master
 	go build -o app main.go
 
 stop:
