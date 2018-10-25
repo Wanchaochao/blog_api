@@ -2,7 +2,6 @@ package admin
 
 import (
 	"blog/core"
-	"blog/util"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -20,13 +19,17 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	q := u.Query()
 	ticket := c.DefaultQuery("ticket", "")
 	if ticket == "" {
-		return c.Fail(203, "missing param article id")
+		return c.Fail(203, "missing param tick")
 	}
 	q.Set("Aid", "2070777383")
 	q.Set("AppSecretKey", "0KIXIBVzzzzimk1KWeO8ycw**")
 	q.Set("Ticket", ticket)
 	log.Println("ticket:", ticket)
-	q.Set("RandStr", util.GetRandomString(18))
+	randStr := c.DefaultQuery("randstr", "")
+	if randStr == "" {
+		return c.Fail(203, "missing param randstr")
+	}
+	q.Set("RandStr", randStr)
 	ip := GetIntranetIp()
 	if ip == "" {
 		return c.Fail(204, "get ip failed")
