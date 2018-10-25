@@ -28,7 +28,7 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	if randStr == "" {
 		return c.Fail(202, "missing param randstr")
 	}
-	q.Set("RandStr", randStr)
+	q.Set("Randstr", randStr)
 	q.Set("UserIP", c.ClientIP())
 	log.Println("Ip:", c.ClientIP())
 	u.RawQuery = q.Encode()
