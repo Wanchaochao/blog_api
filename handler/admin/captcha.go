@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
-	"net"
 	"net/http"
 	"net/url"
 )
@@ -30,12 +29,8 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 		return c.Fail(202, "missing param randstr")
 	}
 	q.Set("RandStr", randStr)
-	ip := GetIntranetIp()
-	if ip == "" {
-		return c.Fail(203, "get ip failed")
-	}
-	q.Set("UserIP", ip)
-	log.Println("Ip:", ip)
+	q.Set("UserIP", c.ClientIP())
+	log.Println("Ip:", c.ClientIP())
 	resp, err := http.Get(u.String())
 	if err != nil {
 		return c.Fail(204, err)
@@ -52,22 +47,4 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	}
 	resp.Body.Close()
 	return c.Success("验证通过！")
-}
-
-func GetIntranetIp() string {
-	addrs, err := net.InterfaceAddrs()
-
-	if err != nil {
-		return ""
-	}
-
-	for _, address := range addrs {
-		// 检查ip地址判断是否回环地址
-		if ipnet, ok := address.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
-			if ipnet.IP.To4() != nil {
-				return ipnet.IP.String()
-			}
-		}
-	}
-	return ""
 }
