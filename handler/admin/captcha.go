@@ -20,7 +20,7 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	if ticket == "" {
 		return c.Fail(201, "missing param tick")
 	}
-	q.Set("Aid", "2070777383")
+	q.Set("aid", "2070777383")
 	q.Set("AppSecretKey", "0KIXIBVzzzzimk1KWeO8ycw**")
 	q.Set("Ticket", ticket)
 	log.Println("ticket:", ticket)
