@@ -19,7 +19,7 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	q := u.Query()
 	ticket := c.DefaultQuery("ticket", "")
 	if ticket == "" {
-		return c.Fail(203, "missing param tick")
+		return c.Fail(201, "missing param tick")
 	}
 	q.Set("Aid", "2070777383")
 	q.Set("AppSecretKey", "0KIXIBVzzzzimk1KWeO8ycw**")
@@ -27,28 +27,28 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	log.Println("ticket:", ticket)
 	randStr := c.DefaultQuery("randstr", "")
 	if randStr == "" {
-		return c.Fail(203, "missing param randstr")
+		return c.Fail(202, "missing param randstr")
 	}
 	q.Set("RandStr", randStr)
 	ip := GetIntranetIp()
 	if ip == "" {
-		return c.Fail(204, "get ip failed")
+		return c.Fail(203, "get ip failed")
 	}
 	q.Set("UserIP", ip)
 	log.Println("Ip:", ip)
 	resp, err := http.Get(u.String())
 	if err != nil {
-		return c.Fail(201, err)
+		return c.Fail(204, err)
 	}
 	result, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return c.Fail(203, err)
+		return c.Fail(205, err)
 	}
 	f := map[string]interface{}{}
 	json.Unmarshal(result, &f)
 	log.Println("ffff!!!", f)
 	if f["response"] != 1 {
-		return c.Fail(205, f["err_msg"])
+		return c.Fail(206, f["err_msg"])
 	}
 	resp.Body.Close()
 	return c.Success("验证通过！")
