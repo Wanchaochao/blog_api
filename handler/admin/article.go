@@ -6,6 +6,46 @@ import (
 	"github.com/ilibs/gosql"
 )
 
+type ArticleJson struct {
+	Id int `json:"id"`
+}
+
+// 获取单个文章
+var Article core.HandlerFunc = func(c *core.Context) core.Response {
+	article := &models.Articles{}
+	request := &ArticleJson{}
+	if err := c.ShouldBindJSON(request); err != nil {
+		return c.Fail(202, err)
+	}
+	if err := gosql.Model(article).Where("id = ?", request.Id).Get(); err != nil {
+		return c.Fail(203, err)
+	}
+	return c.Success(article)
+}
+
+var UpdateArticle core.HandlerFunc = func(c *core.Context) core.Response {
+	article := &models.Articles{}
+	if err := c.ShouldBindJSON(article); err != nil {
+		return c.Fail(202, err)
+	}
+	if article.CategoryId == "" || article.Title == "" || article.Description == "" || article.Author == "" {
+		return c.Fail(202, "params are not permitted")
+	}
+	if len(article.Content) < 50 {
+		return c.Fail(204, "the content of article is too shot")
+	}
+	cate := &models.Category{}
+
+	if err := gosql.Model(cate).Where("id = ?", article.CategoryId).Get(); err != nil {
+		return c.Fail(203, "the article category is not existed!")
+	}
+
+	if _, err := gosql.Model(article).Update(); err != nil {
+		return c.Fail(205, "update article failed!")
+	}
+	return c.Success("update successfully!")
+}
+
 type PageJson struct {
 	Page int `json:"page"`
 }
@@ -41,7 +81,7 @@ var CreateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 		return c.Fail(202, "params are not permitted")
 	}
 	if len(article.Content) < 50 {
-		return c.Fail(204, "the content of article is too little")
+		return c.Fail(204, "the content of article is too shot")
 	}
 	cate := &models.Category{}
 	err := gosql.Model(cate).Where("id = ?", article.CategoryId).Get()

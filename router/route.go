@@ -52,9 +52,11 @@ func Route(router *gin.Engine) {
 		blogAdmin.GET("/getUserInfo", core.Handle(admin.GetUserInfo))
 
 		// 文章管理
-		blogAdmin.POST("/articleList", core.Handle(admin.ArticleList))
-		blogAdmin.POST("/storeArticle", core.Handle(admin.CreateArticle))
-		blogAdmin.GET("/deleteArticle", core.Handle(admin.DeleteArticle))
+		blogAdmin.POST("/articleList", core.Handle(admin.ArticleList))     // 文章列表
+		blogAdmin.POST("/article", core.Handle(admin.Article))             // 单个文章
+		blogAdmin.POST("/storeArticle", core.Handle(admin.CreateArticle))  // 创建文章
+		blogAdmin.GET("/deleteArticle", core.Handle(admin.DeleteArticle))  // 删除文章
+		blogAdmin.POST("/updateArticle", core.Handle(admin.UpdateArticle)) // 更新文章
 
 		// 文章分类
 		blogAdmin.GET("/categories", core.Handle(admin.Categories))
