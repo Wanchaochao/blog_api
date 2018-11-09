@@ -15,31 +15,8 @@ import (
 //}
 
 func Route(router *gin.Engine) {
-	//设置模板
-	//core.SetTemplate(router)
-
-	// 跨域
-	//router.Use(cors.New(cors.Config{
-	//	AllowOrigins: []string{"*"},
-	//	AllowOriginFunc: func(origin string) bool {
-	//		return allowOrigins[origin]
-	//	},
-	//
-	//	AllowMethods: []string{"*"},
-	//	AllowHeaders: []string{
-	//		"Origin",
-	//		"Content-Length",
-	//		"Content-Type",
-	//		"Access-Token",
-	//		"Access-Control-Allow-Origin",
-	//	},
-	//	AllowCredentials: false,
-	//	MaxAge:           12 * time.Hour,
-	//}))
-
 	//中间件token验证
 	router.Use(middleware.Ginrus())
-
 	//登录
 	router.Any("adm/login", core.Handle(admin.LoginPost))
 	// 滑块验证码
