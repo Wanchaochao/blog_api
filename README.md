@@ -107,7 +107,8 @@ server {
 </p>
 
 <p align="center">
-    事实证明我还是太年轻了,从阿里云的证书到CertBot再到Caddy...结果大陆访问香港的https网站会被移动联通拦截...😭
+    事实证明我还是太年轻了,从阿里云的证书到CertBot再到<a href="https://boris1993.github.io/tools/caddy/set-up-caddy-server.html">Caddy</a>...结果大陆访问香港的https网站会被移动联通拦截...😭
+    最后回归原始全部回到http
 </p>
 
 
