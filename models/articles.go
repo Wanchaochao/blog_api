@@ -14,8 +14,8 @@ type Articles struct {
 	Description string    `from:"description" db:"description" json:"description"`
 	Author      string    `from:"author" db:"author" json:"author"`
 	Content     string    `from:"content" db:"content" json:"content"`
-	CreatedAt   time.Time `db:"created_at" json:"created_at"`
-	UpdatedAt   time.Time `db:"updated_at" json:"updated_at"`
+	CreatedAt   time.Time `db:"created_at" json:"created_at" time_format:"2006-01-02 15:04:05"`
+	UpdatedAt   time.Time `db:"updated_at" json:"updated_at" time_format:"2006-01-02 15:04:05"`
 }
 
 func (a *Articles) DbName() string {
@@ -31,16 +31,15 @@ func (a *Articles) PK() string {
 }
 
 type ArticleResp struct {
-	List []*ArticleList `json:"list"`
-	Total int `json:"total"`
-	Current int `json:"current"`
+	List    []*ArticleList `json:"list"`
+	Total   int            `json:"total"`
+	Current int            `json:"current"`
 }
 
 type ArticleList struct {
 	Articles
 	Category string `db:"name"`
 }
-
 
 func GetArticleList(article *Articles, page int, num int, keyword string, startTime string, endTime string) (*ArticleResp, error) {
 	var articles = make([]*ArticleList, 0)
@@ -67,7 +66,7 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		where += " and a.created_at between ? and ? "
 		args = append(args, startTime, endTime)
 	}
-	total, err := gosql.Model(&Articles{}).Where(where,args...).Count()
+	total, err := gosql.Model(&Articles{}).Where(where, args...).Count()
 	if err != nil {
 		return nil, err
 	}
@@ -87,5 +86,5 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 	}
 	pages := pagination.New(int(total), num, page, 5)
 
-	return &ArticleResp{articles,pages.Total(),0}, nil
+	return &ArticleResp{articles, pages.Total(), 0}, nil
 }

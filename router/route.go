@@ -23,7 +23,7 @@ func Route(router *gin.Engine) {
 	router.GET("adm/captcha", core.Handle(admin.Captcha))
 	//后台
 	blogAdmin := router.Group("/adm")
-	blogAdmin.Use(core.Middware(middleware.Token))
+	blogAdmin.Use(core.Middleware(middleware.Token))
 	{
 		// 用户信息
 		blogAdmin.GET("/getUserInfo", core.Handle(admin.GetUserInfo))

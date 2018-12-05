@@ -28,6 +28,8 @@ github.com/konsorten/go-windows-terminal-sequences v0.0.0-20180402223658-b729f26
 github.com/konsorten/go-windows-terminal-sequences v0.0.0-20180402223658-b729f2633dfe/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348 h1:MtvEpTB6LX3vkb4ax0b5D2DHbNAUsen0Gx5wZoq3lV4=
 github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348/go.mod h1:B69LEHPfb2qLo0BaaOLcbitczOKLWTsrBG9LczfCD4k=
+github.com/liamylian/jsontime v0.0.0-20181124155925-6f8248119dc1 h1:SAT6MKfIVY2LvWS/FsUKJ2M0/W8cMxj86oxaR9YgAHc=
+github.com/liamylian/jsontime v0.0.0-20181124155925-6f8248119dc1/go.mod h1:uHFWnSisG50qjJ8TLSjK4ll170WQP4t+YnD6PSZVWiI=
 github.com/lib/pq v1.0.0 h1:X5PMW56eZitiTeO7tKzZxFCSpbFZJtkMMooicw2us9A=
 github.com/lib/pq v1.0.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
 github.com/mattn/go-isatty v0.0.4 h1:bnP0vzxcAdeI1zdubAl5PjU6zsERjGZb7raWodagDYs=

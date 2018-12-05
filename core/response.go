@@ -1,7 +1,9 @@
 package core
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/render"
 )
 
 type Response interface {
@@ -15,7 +17,7 @@ type JSONResponse struct {
 }
 
 func (c *JSONResponse) Render() {
-	c.Context.JSON(c.HttpStatus, c.Data)
+	c.Context.Render(c.HttpStatus, JSON{render.JSON{Data: c.Data}})
 }
 
 type ApiResponse struct {
@@ -27,7 +29,9 @@ type ApiResponse struct {
 }
 
 func (c *ApiResponse) Render() {
-	c.Context.JSON(c.HttpStatus, c)
+
+	fmt.Println("------------------>")
+	c.Context.Render(c.HttpStatus, JSON{render.JSON{Data: c}})
 }
 
 type RedirectResponse struct {
