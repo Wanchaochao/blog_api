@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/render"
 )
@@ -29,8 +28,6 @@ type ApiResponse struct {
 }
 
 func (c *ApiResponse) Render() {
-
-	fmt.Println("------------------>")
 	c.Context.Render(c.HttpStatus, JSON{render.JSON{Data: c}})
 }
 
