@@ -19,6 +19,18 @@
 
 git clone git@github.com:Wanchaochao/blog_api.git
 
+// 配置文件
+cd blog_api
+go get
+go mod vendor
+cp -rf ./config/demo ./config/pro
+cp -rf ./config/demo ./config/local
+
+// captcha配置为腾讯免费滑块验证码配置
+[腾讯滑块验证码](https://007.qq.com/captcha)
+
+go
+
 // 本机为mac，以mac为例，添加app_env
 
 vim ~/.bash_profile
