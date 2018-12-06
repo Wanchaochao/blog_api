@@ -1,6 +1,6 @@
 /bin
 /.idea
-/config/prod
+/config
 app
 blog.pid
 /vendor
