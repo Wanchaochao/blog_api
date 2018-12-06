@@ -23,6 +23,7 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	return c.Success(article)
 }
 
+// 更新文章
 var UpdateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	article := &models.Articles{}
 	if err := c.ShouldBindJSON(article); err != nil {

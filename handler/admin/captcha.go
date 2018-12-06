@@ -24,14 +24,12 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	q.Set("aid", "2070777383")
 	q.Set("AppSecretKey", "0KIXIBVzzzzimk1KWeO8ycw**")
 	q.Set("Ticket", ticket)
-	log.Println("ticket:", ticket)
 	randStr := c.DefaultQuery("randstr", "")
 	if randStr == "" {
 		return c.Fail(202, "missing param randstr")
 	}
 	q.Set("Randstr", randStr)
 	q.Set("UserIP", c.ClientIP())
-	log.Println("Ip:", c.ClientIP())
 	u.RawQuery = q.Encode()
 	resp, err := http.Get(u.String())
 	log.Println("url::", u.String())
