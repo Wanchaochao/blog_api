@@ -26,7 +26,7 @@ func Route(router *gin.Engine) {
 	blogAdmin.Use(core.Middleware(middleware.Token))
 	{
 		// 用户信息
-		blogAdmin.GET("/getUserInfo", core.Handle(admin.GetUserInfo))
+		//blogAdmin.GET("/getUserInfo", core.Handle(admin.GetUserInfo))
 
 		// 文章管理
 		blogAdmin.POST("/articleList", core.Handle(admin.ArticleList))     // 文章列表
