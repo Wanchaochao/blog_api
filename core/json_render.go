@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin/render"
 	"github.com/liamylian/jsontime"
 	"net/http"
@@ -23,9 +22,6 @@ func writeContentType(w http.ResponseWriter, value []string) {
 
 func WriteJSON(w http.ResponseWriter, obj interface{}) error {
 	writeContentType(w, jsonContentType)
-
-	fmt.Println("obj:", obj)
-	fmt.Println("11111111111111")
 	jsonBytes, err := json.Marshal(obj)
 	if err != nil {
 		return err

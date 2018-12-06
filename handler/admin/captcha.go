@@ -1,13 +1,13 @@
 package admin
 
 import (
+	"blog/config"
 	"blog/core"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
-	"reflect"
 )
 
 type CaptchaRequestJson struct {
@@ -15,14 +15,14 @@ type CaptchaRequestJson struct {
 }
 
 var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
-	u, _ := url.Parse("https://ssl.captcha.qq.com/ticket/verify")
+	u, _ := url.Parse(config.App.Captcha.Url)
 	q := u.Query()
 	ticket := c.DefaultQuery("ticket", "")
 	if ticket == "" {
 		return c.Fail(201, "missing param tick")
 	}
-	q.Set("aid", "2070777383")
-	q.Set("AppSecretKey", "0KIXIBVzzzzimk1KWeO8ycw**")
+	q.Set("aid", config.App.Captcha.Aid)
+	q.Set("AppSecretKey", config.App.Captcha.AppSecretKey)
 	q.Set("Ticket", ticket)
 	randStr := c.DefaultQuery("randstr", "")
 	if randStr == "" {
@@ -42,8 +42,6 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	}
 	f := map[string]interface{}{}
 	json.Unmarshal(result, &f)
-	log.Println("result::", f)
-	log.Println("response type::", reflect.TypeOf(f["response"]))
 	if f["response"] != "1" {
 		return c.Fail(206, f["err_msg"])
 	}

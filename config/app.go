@@ -26,6 +26,12 @@ type common struct {
 	Token       string `json:"token"`
 }
 
+type captcha struct {
+	Aid          string `json:"aid"`
+	AppSecretKey string `json:"AppSecretKey"`
+	Url          string `json:"url"`
+}
+
 //type slbConfig struct {
 //	AccessKeyId     string `json:"access_key_id"`
 //	AccessKeySecret string `json:"access_key_secret"`
@@ -33,8 +39,9 @@ type common struct {
 //}
 
 type app struct {
-	Common    common                   `conf:"common"`
-	Log       logger.Config            `conf:"log"`
+	Common  common  `conf:"common"`
+	Captcha captcha `conf:"captcha"`
+	//Log       logger.Config            `conf:"log"`
 	Db        map[string]*gosql.Config `conf:"database"`
 	StartTime time.Time
 	//Slb       slbConfig     `conf:"slb"`
@@ -92,18 +99,18 @@ func Load(args map[string]string) {
 		debug.Open("on", args["debug-tag"])
 		debug.SavePath(filepath.Join(App.Common.StoragePath, "debug"))
 		//log level
-		App.Log.LogLevel = "debug"
+		//App.Log.LogLevel = "debug"
 		//log model
-		App.Log.LogMode = "std"
+		//App.Log.LogMode = "std"
 	}
 
-	logger.Setting(func(c *logger.Config) {
-		c.LogMode = App.Log.LogMode
-		c.LogLevel = App.Log.LogLevel
-		c.LogMaxFiles = App.Log.LogMaxFiles
-		c.LogPath = filepath.Join(App.Common.StoragePath, "logs")
-		c.LogSentryDSN = App.Log.LogSentryDSN
-		c.LogSentryType = App.Log.LogSentryType
-	})
+	//logger.Setting(func(c *logger.Config) {
+	//	c.LogMode = App.Log.LogMode
+	//	c.LogLevel = App.Log.LogLevel
+	//	c.LogMaxFiles = App.Log.LogMaxFiles
+	//	c.LogPath = filepath.Join(App.Common.StoragePath, "logs")
+	//	c.LogSentryDSN = App.Log.LogSentryDSN
+	//	c.LogSentryType = App.Log.LogSentryType
+	//})
 	fmt.Println(util.JsonEncode(App))
 }
