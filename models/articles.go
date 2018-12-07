@@ -49,22 +49,22 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 	where := " 1 = 1 "
 
 	if article.Id > 0 {
-		where += " and a.id = ? "
+		where += " and articles.id = ? "
 		args = append(args, article.Id)
 	}
 
 	if keyword != "" {
-		where += " and a.title like ? "
+		where += " and articles.title like ? "
 		args = append(args, "%"+keyword+"%")
 	}
 
 	if article.CategoryId != "" {
-		where += " and a.category_id = ? "
+		where += " and articles.category_id = ? "
 		args = append(args, article.CategoryId)
 	}
 
 	if startTime != "" && endTime != "" {
-		where += " and a.created_at between ? and ? "
+		where += " and articles.created_at between ? and ? "
 		args = append(args, startTime, endTime)
 	}
 	fmt.Println("========>", args, where)
@@ -74,7 +74,7 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 	}
 	args = append(args, start, num)
 	log.Print("sql begin")
-	err = gosql.Select(&articles, "select a.*,c.name from articles a left join category c on c.id = a.category_id  where "+where+" order by a.id desc limit ?,?", args...)
+	err = gosql.Select(&articles, "select articles.*,category.name from articles left join category on category.id = articles.category_id  where "+where+" order by articles.id desc limit ?,?", args...)
 	if err != nil {
 		return nil, err
 	}
