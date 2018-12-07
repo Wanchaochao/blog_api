@@ -30,7 +30,7 @@ var LoginPost core.HandlerFunc = func(c *core.Context) core.Response {
 	md5 := md5.New()
 	md5.Write([]byte(params.Password))
 	if md5str := hex.EncodeToString(md5.Sum(nil)); md5str != user.Password {
-		return c.Fail(401, "密码错误!"+md5str)
+		return c.Fail(401, "密码错误!")
 	}
 
 	return c.Success(user)

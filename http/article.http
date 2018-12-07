@@ -1,0 +1,59 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+### 文章列表
+### Send POST request with json body
+POST http://localhost:8081/adm/articleList
+Content-Type: application/json
+Access-Token:
+
+{
+  "page": 1
+//  "start_time": "2018-11-01 00:00:00",
+//  "end_time": "2018-12-10 00:00:00",
+//  "keyword": "test"
+}
+
+### 获取单个文章
+### Send POST request with json body
+POST http://localhost:8081/adm/article
+Content-Type: application/json
+
+{"id": 1}
+
+### 创建文章
+### Send POST request with json body
+POST http://localhost:8081/adm/storeArticle
+Content-Type: application/json
+
+{
+  "title": "httptest",
+  "category_id": "1",
+  "description": "http test 文章",
+  "author": "http",
+  "content": "http test 文章http test 文章http test 文章http test 文章http test 文章http test 文章http test 文"
+}
+
+### 更新文章
+POST http://localhost:8081/adm/updateArticle
+Content-Type: application/json
+
+{
+  "id": "20",
+  "title": "httptest",
+  "category_id": "1",
+  "description": "http test 文章",
+  "author": "http",
+  "content": "http test 文章http test 文章http test 文章http test 文章http test 文章http test 文章http test 文"
+}
+
+### 删除文章
+GET http://localhost:8081/adm/deleteArticle?id=18
+Accept: application/json
+
+###
+

@@ -1,0 +1,9 @@
+### 文章分类
+GET http://localhost:8081/adm/categories
+Accept: application/json
+
+### 创建文章分类
+GET http://localhost:8081/adm/createCategory?name=test
+Accept: application/json
+
+###

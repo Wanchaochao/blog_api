@@ -1,0 +1,10 @@
+### 登录
+POST http://localhost:8081/adm/login?ticket=123123&randstr=123123123
+Content-Type: application/json
+
+{
+  "name": "littlebug",
+  "password": "123456"
+}
+
+###

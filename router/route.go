@@ -18,7 +18,7 @@ func Route(router *gin.Engine) {
 	//中间件token验证
 	router.Use(middleware.Ginrus())
 	//登录
-	router.Any("adm/login", core.Handle(admin.LoginPost))
+	router.POST("adm/login", core.Handle(admin.LoginPost))
 	// 滑块验证码
 	router.GET("adm/captcha", core.Handle(admin.Captcha))
 	//后台

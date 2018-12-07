@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/ilibs/gosql"
 	"github.com/verystar/golib/pagination"
 	"log"
@@ -66,23 +67,16 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		where += " and a.created_at between ? and ? "
 		args = append(args, startTime, endTime)
 	}
+	fmt.Println("========>", args, where)
 	total, err := gosql.Model(&Articles{}).Where(where, args...).Count()
 	if err != nil {
 		return nil, err
 	}
 	args = append(args, start, num)
 	log.Print("sql begin")
-	rows, err := gosql.Queryx("select a.*,c.name from articles a left join category c on c.id = a.category_id  where "+where+" order by a.id desc limit ?,?", args...)
+	err = gosql.Select(&articles, "select a.*,c.name from articles a left join category c on c.id = a.category_id  where "+where+" order by a.id desc limit ?,?", args...)
 	if err != nil {
 		return nil, err
-	}
-	for rows.Next() {
-		v := &ArticleList{}
-		err := rows.StructScan(v)
-		if err != nil {
-			return nil, err
-		}
-		articles = append(articles, v)
 	}
 	pages := pagination.New(int(total), num, page, 5)
 

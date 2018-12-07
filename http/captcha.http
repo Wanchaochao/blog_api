@@ -1,0 +1,5 @@
+### 验证码
+GET http://localhost:8081/adm/captcha?ticket=123123&randstr=123123123
+Accept: application/json
+
+###

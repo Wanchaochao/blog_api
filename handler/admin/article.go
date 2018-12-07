@@ -47,26 +47,26 @@ var UpdateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	return c.Success("update successfully!")
 }
 
-type PageJson struct {
-	Page int `json:"page"`
+type ListRequest struct {
+	Page      int    `json:"page"`
+	Keyword   string `json:"keyword"`
+	StartTime string `json:"start_time"`
+	EndTime   string `json:"end_time"`
 }
 
 // 文章列表
 var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	article := &models.Articles{}
-	page := &PageJson{}
-	err := c.ShouldBindJSON(page)
+	request := &ListRequest{}
+	err := c.ShouldBindJSON(request)
 	if err != nil {
 		return c.Fail(202, err)
 	}
-	keyword := c.DefaultQuery("keyword", "")
-	startTime := c.DefaultQuery("start_time", "")
-	endTime := c.DefaultQuery("start_time", "")
-	articleResp, err := models.GetArticleList(article, page.Page, 10, keyword, startTime, endTime)
+	articleResp, err := models.GetArticleList(article, request.Page, 10, request.Keyword, request.StartTime, request.EndTime)
 	if err != nil {
 		return c.Fail(203, err)
 	}
-	articleResp.Current = page.Page
+	articleResp.Current = request.Page
 	return c.Success(articleResp)
 }
 

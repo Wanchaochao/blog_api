@@ -5,7 +5,6 @@ import (
 	"blog/core"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 )
@@ -32,7 +31,6 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 	q.Set("UserIP", c.ClientIP())
 	u.RawQuery = q.Encode()
 	resp, err := http.Get(u.String())
-	log.Println("url::", u.String())
 	if err != nil {
 		return c.Fail(204, err)
 	}

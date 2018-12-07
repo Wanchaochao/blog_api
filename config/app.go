@@ -24,6 +24,7 @@ type common struct {
 	StatDB      string `json:"stat_db"`
 	Port        string `json:"port"`
 	Token       string `json:"token"`
+	HttpTest    bool   `json:"http_test"`
 }
 
 type captcha struct {

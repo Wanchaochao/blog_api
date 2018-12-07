@@ -8,6 +8,12 @@ import (
 )
 
 var Token core.HandlerFunc = func(c *core.Context) core.Response {
+
+	if config.App.Common.HttpTest {
+		c.Next()
+		return nil
+	}
+
 	token := c.Request.Header.Get("Access-Token")
 	if token != config.App.Common.Token {
 		return c.Fail(201, "token error!")

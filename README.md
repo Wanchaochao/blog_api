@@ -14,7 +14,6 @@
 ## install
 
 ```
-
 // 为了方便部署，go mod vendor已经将vendor目录加入了项目文件
 
 git clone git@github.com:Wanchaochao/blog_api.git
@@ -42,6 +41,8 @@ make
 ./app http -addr=:8083
 
 ```
+
+
 <p align="center">
 	<a href="https:www.littlebug.vip">
 		<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/test/6E86E115-5DBF-4DB9-A095-EB0DD0F693A7.png" width="500">
@@ -100,6 +101,41 @@ server {
 
     access_log  /var/log/nginx/api.littlebug.log  access;
 }
+```
+
+
+## 接口测试
+
+
+
+```
+// 修改本地配置文件
+// config/local/common.json
+
+// 将这里改为true,不然会被中间件拦截下来
+"http_test" : true
+
+// 代码位置 router/middleware/token.go
+
+if config.App.Common.HttpTest {
+    c.Next()
+    return nil
+}
+
+```
+**这里千万要注意线上一定要设置APP_ENV环境变量,否则使用的将是local里的配置,如果你的http_test配置为true,则接口没有任何安全性可言了,pro里的http_test一定要关闭**
+
+### 运行接口测试
+
+**别忘了开启http服务**
+<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/run_http_test01.png">
+<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/run_http_test02.png">
+
+### 如何使用 http client
+<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/http_client_01.png">
+<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/http_client_02.png">
+<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/http_client_03.png">
+
 
 
 ```
