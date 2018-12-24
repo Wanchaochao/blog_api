@@ -29,7 +29,7 @@ var UpdateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	if err := c.ShouldBindJSON(article); err != nil {
 		return c.Fail(202, err)
 	}
-	if article.CategoryId == "" || article.Title == "" || article.Description == "" || article.Author == "" {
+	if article.CategoryId <= 0 || article.Title == "" || article.Description == "" || article.Author == "" {
 		return c.Fail(202, "params are not permitted")
 	}
 	if len(article.Content) < 50 {
@@ -66,7 +66,6 @@ var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	if err != nil {
 		return c.Fail(203, err)
 	}
-	articleResp.Current = request.Page
 	return c.Success(articleResp)
 }
 
@@ -78,7 +77,7 @@ var CreateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	if err := c.ShouldBindJSON(article); err != nil {
 		return c.Fail(301, err)
 	}
-	if article.CategoryId == "" || article.Title == "" || article.Description == "" || article.Author == "" {
+	if article.CategoryId <= 0 || article.Title == "" || article.Description == "" || article.Author == "" {
 		return c.Fail(202, "params are not permitted")
 	}
 	if len(article.Content) < 50 {

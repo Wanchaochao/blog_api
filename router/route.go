@@ -4,6 +4,7 @@ import (
 	"blog/core"
 	"blog/debug"
 	"blog/handler/admin"
+	"blog/handler/index"
 	"blog/router/middleware"
 	"github.com/gin-gonic/gin"
 )
@@ -21,6 +22,7 @@ func Route(router *gin.Engine) {
 	router.POST("adm/login", core.Handle(admin.LoginPost))
 	// 滑块验证码
 	router.GET("adm/captcha", core.Handle(admin.Captcha))
+
 	//后台
 	blogAdmin := router.Group("/adm")
 	blogAdmin.Use(core.Middleware(middleware.Token))
@@ -38,7 +40,15 @@ func Route(router *gin.Engine) {
 		// 文章分类
 		blogAdmin.GET("/categories", core.Handle(admin.Categories))
 		//blogAdmin.GET("/deleteCategory",core.Handle(admin.DeleteCategory)) // 删
-		blogAdmin.GET("/createCategory", core.Handle(admin.CreateCategory)) // 增
+		blogAdmin.GET("/createCategory", core.Handle(admin.CreateCategory)) //
+	}
+
+	// 前台
+	indexApi := router.Group("/api")
+	{
+		// 文章管理
+		indexApi.POST("/articleList", core.Handle(index.ArticleList)) // 文章列表
+		indexApi.GET("/categories", core.Handle(index.Categories))    // 文章分类列表
 	}
 
 	//debug handler

@@ -8,9 +8,8 @@ require (
 	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
 	github.com/gin-gonic/gin v1.3.0
 	github.com/go-sql-driver/mysql v1.4.1
-	github.com/ilibs/gosql v1.0.4
+	github.com/ilibs/gosql v1.1.1
 	github.com/ilibs/json5 v0.0.0-20160717195620-7620272ed633 // indirect
-	github.com/jmoiron/sqlx v1.2.0 // indirect
 	github.com/kylelemons/godebug v0.0.0-20170820004349-d65d576e9348 // indirect
 	github.com/liamylian/jsontime v0.0.0-20181124155925-6f8248119dc1
 	github.com/mattn/go-isatty v0.0.4 // indirect

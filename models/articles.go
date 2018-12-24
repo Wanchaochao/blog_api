@@ -1,9 +1,9 @@
 package models
 
 import (
+	"blog/util"
 	"fmt"
 	"github.com/ilibs/gosql"
-	"github.com/verystar/golib/pagination"
 	"log"
 	"time"
 )
@@ -11,7 +11,7 @@ import (
 type Articles struct {
 	Id          int       `from:"id" db:"id" json:"id"`
 	Title       string    `from:"title" db:"title" json:"title"`
-	CategoryId  string    `from:"category_id" db:"category_id" json:"category_id"`
+	CategoryId  int       `from:"category_id" db:"category_id" json:"category_id"`
 	Description string    `from:"description" db:"description" json:"description"`
 	Author      string    `from:"author" db:"author" json:"author"`
 	Content     string    `from:"content" db:"content" json:"content"`
@@ -32,18 +32,16 @@ func (a *Articles) PK() string {
 }
 
 type ArticleResp struct {
-	List    []*ArticleList `json:"list"`
-	Total   int            `json:"total"`
-	Current int            `json:"current"`
+	List []*ArticleList `json:"list"`
+	Page *util.Page     `json:"page"`
 }
 
 type ArticleList struct {
 	Articles
-	Category string `db:"name"`
+	CategoryInfo *Category `json:"category_info" db:"-" relation:"category_id,id"`
 }
 
 func GetArticleList(article *Articles, page int, num int, keyword string, startTime string, endTime string) (*ArticleResp, error) {
-	var articles = make([]*ArticleList, 0)
 	start := (page - 1) * num
 	args := make([]interface{}, 0)
 	where := " 1 = 1 "
@@ -58,7 +56,7 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		args = append(args, "%"+keyword+"%")
 	}
 
-	if article.CategoryId != "" {
+	if article.CategoryId <= 0 {
 		where += " and articles.category_id = ? "
 		args = append(args, article.CategoryId)
 	}
@@ -74,11 +72,14 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 	}
 	args = append(args, start, num)
 	log.Print("sql begin")
-	err = gosql.Select(&articles, "select articles.*,category.name from articles left join category on category.id = articles.category_id  where "+where+" order by articles.id desc limit ?,?", args...)
-	if err != nil {
+	var articles = make([]*ArticleList, 0)
+	if err = gosql.Model(&articles).Where(where).Limit(num).All(); err != nil {
 		return nil, err
 	}
-	pages := pagination.New(int(total), num, page, 5)
-
-	return &ArticleResp{articles, pages.Total(), 0}, nil
+	pageStruct := &util.Page{
+		Current:  page,
+		PageSize: num,
+		Total:    int(total),
+	}
+	return &ArticleResp{articles, pageStruct}, nil
 }
