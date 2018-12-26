@@ -48,6 +48,7 @@ func Route(router *gin.Engine) {
 	{
 		// 文章管理
 		indexApi.POST("/articleList", core.Handle(index.ArticleList)) // 文章列表
+		indexApi.GET("/article", core.Handle(index.Article))          //单个文章
 		indexApi.GET("/categories", core.Handle(index.Categories))    // 文章分类列表
 	}
 
