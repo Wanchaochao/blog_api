@@ -36,6 +36,12 @@ type ArticleResp struct {
 	Page *util.Page     `json:"page"`
 }
 
+// 文章的赞扬反对数
+type ArticleEvaluate struct {
+	Praise  int `json:"praise"`
+	Against int `json:"against"`
+}
+
 type ArticleList struct {
 	Articles
 	CategoryInfo *Category `json:"category_info" db:"-" relation:"category_id,id"`
