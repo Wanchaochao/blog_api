@@ -42,6 +42,12 @@ type ArticleEvaluate struct {
 	Against int `json:"against"`
 }
 
+type ArticleInfo struct {
+	Articles
+	CategoryInfo    *Category `json:"category_info" db:"-" relation:"category_id,id"`
+	ArticleEvaluate `json:"article_evaluate" db:"-"`
+}
+
 type ArticleList struct {
 	Articles
 	CategoryInfo *Category `json:"category_info" db:"-" relation:"category_id,id"`

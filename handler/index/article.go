@@ -28,19 +28,28 @@ var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	return c.Success(articleResp)
 }
 
-type ArticleJson struct {
-	Id int `json:"id"`
-}
-
 // 获取单个文章
 var Article core.HandlerFunc = func(c *core.Context) core.Response {
-	article := &models.Articles{}
-	request := &ArticleJson{}
-	if err := c.ShouldBindJSON(request); err != nil {
-		return c.Fail(202, err)
+	id := c.DefaultQuery("id", "")
+	if id == "" {
+		return c.Fail(202, "缺少参数")
 	}
-	if err := gosql.Model(article).Where("id = ?", request.Id).Get(); err != nil {
+
+	resp := &models.ArticleInfo{}
+
+	if err := gosql.Model(resp).Where("id = ?", id).Get(); err != nil {
 		return c.Fail(203, err)
 	}
-	return c.Success(article)
+	praiseNum, err := gosql.Model(&models.Evaluate{}).Where("type = 1 and praise = 1 and foreign_key = ?", id).Count()
+	if err != nil {
+		return c.Fail(204, err)
+	}
+	againstNum, err := gosql.Model(&models.Evaluate{}).Where("type = 1 and praise = 0 and foreign_key = ?", id).Count()
+	if err != nil {
+		return c.Fail(204, err)
+	}
+	resp.ArticleEvaluate.Praise = int(praiseNum)
+	resp.ArticleEvaluate.Against = int(againstNum)
+
+	return c.Success(resp)
 }
