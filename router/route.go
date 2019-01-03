@@ -46,10 +46,12 @@ func Route(router *gin.Engine) {
 	// 前台
 	indexApi := router.Group("/api")
 	{
-		// 文章管理
-		indexApi.POST("/articleList", core.Handle(index.ArticleList)) // 文章列表
-		indexApi.GET("/article", core.Handle(index.Article))          //单个文章
-		indexApi.GET("/categories", core.Handle(index.Categories))    // 文章分类列表
+		// 文章
+		indexApi.POST("/articleList", core.Handle(index.ArticleList))  // 文章列表
+		indexApi.GET("/article", core.Handle(index.Article))           //单个文章
+		indexApi.GET("/comments", core.Handle(index.Comments))         //文章的所有评论
+		indexApi.GET("/prevNext", core.Handle(index.ArticlesPrevNext)) //文章的前后
+		indexApi.GET("/categories", core.Handle(index.Categories))     // 文章分类列表
 	}
 
 	//debug handler

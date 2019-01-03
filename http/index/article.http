@@ -16,10 +16,16 @@ Access-Token:
 }
 
 ### 获取单个文章
-### Send POST request with json body
-POST http://localhost:8081/api/article
-Content-Type: application/json
+GET http://localhost:8081/api/article?id=1
+Accept: application/json
 
-{"id": 1}
+### 获取文章的所有评论
+GET http://localhost:8081/api/comments?article_id=1
+Accept: application/json
 
+### 获取文章的所有评论
+GET http://localhost:8081/api/prevNext?article_id=1
+Accept: application/json
+
+###
 

@@ -5,7 +5,7 @@
 # * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
 # * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
 
-### 文章列表
+### 文章分类列表
 ### Send POST request with json body
 GET http://localhost:8081/api/categories
 Accept: application/json

@@ -23,3 +23,9 @@ func (c *Comments) TableName() string {
 func (c *Comments) PK() string {
 	return "id"
 }
+
+type CommentsInfo struct {
+	Comments
+	PraiseNum  int `json:"praise_num"`
+	AgainstNum int `json:"against_num"`
+}

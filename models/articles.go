@@ -2,7 +2,6 @@ package models
 
 import (
 	"blog/util"
-	"fmt"
 	"github.com/ilibs/gosql"
 	"log"
 	"time"
@@ -31,15 +30,10 @@ func (a *Articles) PK() string {
 	return "id"
 }
 
-type ArticleResp struct {
-	List []*ArticleList `json:"list"`
-	Page *util.Page     `json:"page"`
-}
-
 // 文章的赞扬反对数
 type ArticleEvaluate struct {
-	Praise  int `json:"praise"`
-	Against int `json:"against"`
+	PraiseNum  int `json:"praise_num"`
+	AgainstNum int `json:"against_num"`
 }
 
 type ArticleInfo struct {
@@ -51,6 +45,12 @@ type ArticleInfo struct {
 type ArticleList struct {
 	Articles
 	CategoryInfo *Category `json:"category_info" db:"-" relation:"category_id,id"`
+}
+
+// 文章列表
+type ArticleResp struct {
+	List []*ArticleList `json:"list"`
+	Page *util.Page     `json:"page"`
 }
 
 func GetArticleList(article *Articles, page int, num int, keyword string, startTime string, endTime string) (*ArticleResp, error) {
@@ -77,7 +77,6 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		where += " and articles.created_at between ? and ? "
 		args = append(args, startTime, endTime)
 	}
-	fmt.Println("========>", args, where)
 	total, err := gosql.Model(&Articles{}).Where(where, args...).Count()
 	if err != nil {
 		return nil, err
