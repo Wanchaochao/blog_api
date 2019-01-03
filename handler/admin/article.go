@@ -20,7 +20,7 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	if err := gosql.Model(article).Where("id = ?", request.Id).Get(); err != nil {
 		return c.Fail(203, err)
 	}
-	return c.Success(article)
+	return c.Success(article, "ok")
 }
 
 // 更新文章
@@ -44,7 +44,7 @@ var UpdateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	if _, err := gosql.Model(article).Update(); err != nil {
 		return c.Fail(205, "update article failed!")
 	}
-	return c.Success("update successfully!")
+	return c.Success("", "update successfully!")
 }
 
 type ListRequest struct {
@@ -66,7 +66,7 @@ var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	if err != nil {
 		return c.Fail(203, err)
 	}
-	return c.Success(articleResp)
+	return c.Success(articleResp, "ok")
 }
 
 // 创建文章
@@ -92,7 +92,7 @@ var CreateArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	if _, err := gosql.Model(article).Create(); err != nil {
 		return c.Fail(204, err)
 	}
-	return c.Success(nil)
+	return c.Success(nil, "ok")
 }
 
 // 删除文章
@@ -105,5 +105,5 @@ var DeleteArticle core.HandlerFunc = func(c *core.Context) core.Response {
 	if _, err := gosql.Model(article).Where("id = ?", id).Delete(); err != nil {
 		return c.Fail(301, err)
 	}
-	return c.Success("删除成功")
+	return c.Success(nil, "删除成功")
 }

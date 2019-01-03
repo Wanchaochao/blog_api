@@ -44,5 +44,5 @@ var Captcha core.HandlerFunc = func(c *core.Context) core.Response {
 		return c.Fail(206, f["err_msg"])
 	}
 	resp.Body.Close()
-	return c.Success("验证通过！")
+	return c.Success(nil, "验证通过！")
 }

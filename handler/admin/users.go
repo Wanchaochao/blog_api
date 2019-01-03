@@ -33,7 +33,7 @@ var LoginPost core.HandlerFunc = func(c *core.Context) core.Response {
 		return c.Fail(401, "密码错误!")
 	}
 
-	return c.Success(user)
+	return c.Success(user, "ok")
 
 	return nil
 }

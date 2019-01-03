@@ -39,13 +39,13 @@ func (c *Context) Fail(code int, msg interface{}) Response {
 	}
 }
 
-func (c *Context) Success(data interface{}) Response {
+func (c *Context) Success(data interface{}, msg string) Response {
 	return &ApiResponse{
 		HttpStatus: getHttpStatus(c, 200),
 		Context:    c.Context,
 		Retcode:    0,
 		Data:       data,
-		Msg:        "ok",
+		Msg:        msg,
 	}
 }
 

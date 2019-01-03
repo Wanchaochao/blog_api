@@ -28,4 +28,22 @@ GET http://localhost:8081/api/prevNext?article_id=1
 Accept: application/json
 
 ###
+POST http://localhost:8081/api/createComment
+Content-Type: application/json
 
+{
+  "article_id": 1,
+  "nickname": "唐JJ",
+  "content": "曹晓斌就是个大沙雕！"
+}
+
+###
+
+POST http://localhost:8081/api/articles
+Content-Type: application/json
+
+{
+  "category_id": 3
+}
+
+###

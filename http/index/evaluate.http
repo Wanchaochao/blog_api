@@ -1,0 +1,5 @@
+### 对文章或评论点赞,点踩
+GET http://localhost:8081/api/evaluate?id=21&type=2&praise=0
+Accept: application/json
+
+###

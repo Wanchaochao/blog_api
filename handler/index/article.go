@@ -26,7 +26,7 @@ var ArticleList core.HandlerFunc = func(c *core.Context) core.Response {
 	if err != nil {
 		return c.Fail(203, err)
 	}
-	return c.Success(articleResp)
+	return c.Success(articleResp, "ok")
 }
 
 // 获取单个文章
@@ -54,7 +54,7 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	resp.ArticleEvaluate.PraiseNum = int(praiseNum)
 	resp.ArticleEvaluate.AgainstNum = int(againstNum)
 
-	return c.Success(resp)
+	return c.Success(resp, "ok")
 }
 
 var ArticlesPrevNext core.HandlerFunc = func(c *core.Context) core.Response {
@@ -70,7 +70,7 @@ var ArticlesPrevNext core.HandlerFunc = func(c *core.Context) core.Response {
 	if err := gosql.Model(&resp.Next).Where("id > ?", articleId).Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
-	return c.Success(resp)
+	return c.Success(resp, "ok")
 }
 
 // 文章的全部评论
@@ -87,5 +87,43 @@ var Comments core.HandlerFunc = func(c *core.Context) core.Response {
 			comment.AgainstNum = int(a)
 		}
 	}
-	return c.Success(comments)
+	return c.Success(comments, "ok")
+}
+
+// 评论文章
+var CreateComments core.HandlerFunc = func(c *core.Context) core.Response {
+
+	comments := &models.Comments{}
+	if err := c.ShouldBindJSON(comments); err != nil {
+		return c.Fail(201, err)
+	}
+	pk, err := gosql.Model(comments).Create()
+	if err != nil {
+		return c.Fail(202, err)
+	}
+	comment := &models.Comments{}
+	if err := gosql.Model(comment).Where("id = ?", pk).Get(); err != nil && nil != sql.ErrNoRows {
+		return c.Fail(203, err)
+	}
+	return c.Success(comment, "ok")
+}
+
+// 根据分类获取分类下所有文章
+var Articles core.HandlerFunc = func(c *core.Context) core.Response {
+
+	req := struct {
+		CategoryId int `json:"category_id"`
+	}{}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		return c.Fail(201, err)
+	}
+
+	articles := make([]*models.Articles, 0)
+
+	if err := gosql.Model(&articles).Where("category_id = ?", req.CategoryId).All(); err != nil {
+		return c.Fail(202, err)
+	}
+
+	return c.Success(articles, "ok")
 }
