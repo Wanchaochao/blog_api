@@ -68,7 +68,7 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		args = append(args, "%"+keyword+"%")
 	}
 
-	if article.CategoryId <= 0 {
+	if article.CategoryId > 0 {
 		where += " and articles.category_id = ? "
 		args = append(args, article.CategoryId)
 	}

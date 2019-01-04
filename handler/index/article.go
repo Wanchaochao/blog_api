@@ -119,11 +119,42 @@ var Articles core.HandlerFunc = func(c *core.Context) core.Response {
 		return c.Fail(201, err)
 	}
 
-	articles := make([]*models.Articles, 0)
+	type resp = struct {
+		models.Articles
+		Like        int `json:"like"`
+		Dislike     int `json:"dislike"`
+		CommentsNum int `json:"comments_num"`
+	}
+
+	articles := make([]*resp, 0)
 
 	if err := gosql.Model(&articles).Where("category_id = ?", req.CategoryId).All(); err != nil {
 		return c.Fail(202, err)
 	}
 
+	// 文章的点踩点赞数
+	for _, value := range articles {
+		rows, err := gosql.Queryx("select count(*) num, praise from evaluate where foreign_key = ? and type = 1 group by praise", value.Articles.Id)
+		if err != nil {
+			return c.Fail(203, err)
+		}
+
+		for rows.Next() {
+			var num int
+			var praise int
+			rows.Scan(&num, &praise)
+			if praise == 0 {
+				value.Dislike = num
+			} else {
+				value.Like = num
+			}
+		}
+		// 文章的评论数
+		num, err := gosql.Model(&models.Comments{}).Where("article_id = ?", value.Articles.Id).Count()
+		if err != nil {
+			return c.Fail(204, err)
+		}
+		value.CommentsNum = int(num)
+	}
 	return c.Success(articles, "ok")
 }
