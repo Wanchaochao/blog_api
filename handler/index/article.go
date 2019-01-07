@@ -53,23 +53,19 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	}
 	resp.ArticleEvaluate.PraiseNum = int(praiseNum)
 	resp.ArticleEvaluate.AgainstNum = int(againstNum)
-
-	return c.Success(resp, "ok")
-}
-
-var ArticlesPrevNext core.HandlerFunc = func(c *core.Context) core.Response {
-	articleId := c.DefaultQuery("article_id", "")
-	var resp = struct {
+	var nresp = struct {
 		Prev models.Articles `json:"prev"`
 		Next models.Articles `json:"next"`
 	}{}
-	// 上一篇下一篇
-	if err := gosql.Model(&resp.Prev).Where("id < ?", articleId).Get(); err != nil && err != sql.ErrNoRows {
+	if err := gosql.Model(&nresp.Prev).Where("id < ?", id).Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
-	if err := gosql.Model(&resp.Next).Where("id > ?", articleId).Get(); err != nil && err != sql.ErrNoRows {
+	if err := gosql.Model(&nresp.Next).Where("id > ?", id).Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
+
+	resp.Prev = nresp.Prev.Id
+	resp.Next = nresp.Next.Id
 	return c.Success(resp, "ok")
 }
 

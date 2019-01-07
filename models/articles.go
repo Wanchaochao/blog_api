@@ -40,6 +40,8 @@ type ArticleInfo struct {
 	Articles
 	CategoryInfo    *Category `json:"category_info" db:"-" relation:"category_id,id"`
 	ArticleEvaluate `json:"article_evaluate" db:"-"`
+	Prev            int `json:"prev"`
+	Next            int `json:"next"`
 }
 
 type ArticleList struct {
