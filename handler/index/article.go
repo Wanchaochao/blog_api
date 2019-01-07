@@ -53,19 +53,14 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	}
 	resp.ArticleEvaluate.PraiseNum = int(praiseNum)
 	resp.ArticleEvaluate.AgainstNum = int(againstNum)
-	var nresp = struct {
-		Prev models.Articles `json:"prev"`
-		Next models.Articles `json:"next"`
-	}{}
-	if err := gosql.Model(&nresp.Prev).Where("id < ?", id).Get(); err != nil && err != sql.ErrNoRows {
+
+	if err := gosql.Model(&resp.Prev).Where("id < ?", id).Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
-	if err := gosql.Model(&nresp.Next).Where("id > ?", id).Get(); err != nil && err != sql.ErrNoRows {
+	if err := gosql.Model(&resp.Next).Where("id > ?", id).Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
 
-	resp.Prev = nresp.Prev.Id
-	resp.Next = nresp.Next.Id
 	return c.Success(resp, "ok")
 }
 
