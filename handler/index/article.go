@@ -68,7 +68,7 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 var Comments core.HandlerFunc = func(c *core.Context) core.Response {
 	articleId := c.DefaultQuery("article_id", "")
 	comments := make([]*models.CommentsInfo, 0)
-	gosql.Model(&comments).Where("article_id = ?", articleId).All()
+	gosql.Model(&comments).Where("article_id = ?", articleId).OrderBy("created_at desc").All()
 	// 评论的点赞数点踩数
 	for _, comment := range comments {
 		if p, err := gosql.Model(&models.Evaluate{}).Where("type = 2 and praise = 1 and foreign_key = ?", comment.Id).Count(); err == nil {
