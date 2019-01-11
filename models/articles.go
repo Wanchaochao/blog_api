@@ -3,7 +3,6 @@ package models
 import (
 	"blog/util"
 	"github.com/ilibs/gosql"
-	"log"
 	"time"
 )
 
@@ -84,9 +83,8 @@ func GetArticleList(article *Articles, page int, num int, keyword string, startT
 		return nil, err
 	}
 	args = append(args, start, num)
-	log.Print("sql begin")
 	var articles = make([]*ArticleList, 0)
-	if err = gosql.Model(&articles).Where(where).Limit(num).All(); err != nil {
+	if err = gosql.Model(&articles).Where(where).Limit(num).OrderBy("created_at desc").All(); err != nil {
 		return nil, err
 	}
 	pageStruct := &util.Page{
