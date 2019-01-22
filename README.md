@@ -1,5 +1,9 @@
 ## 博客后台接口 (www.littlebug.vip)
 
+[![stable](https://img.shields.io/badge/gin--gonic%2Fgin-1.3.0-green.svg)](https://github.com/gin-gonic/gin)
+[![stable](https://img.shields.io/badge/ilibs-open-brightgreen.svg)](https://github.com/ilibs)
+[![stable](https://img.shields.io/badge/gosql-v1.1.1-brightgreen.svg)](https://github.com/ilibs/gosql)
+
 <p align="center">
 	<a href="https:www.littlebug.vip">
 		<img src="http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/favicon.ico" width="75">
