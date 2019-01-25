@@ -1,0 +1,10 @@
+{
+  "default": {
+    "enable": true,
+    "driver": "mysql",
+    "dsn": "root:123456@tcp(127.0.0.1:3306)/blog_admin?charset=utf8mb4&parseTime=True&loc=Asia%2FShanghai",
+    "max_open_conns": 100,
+    "max_idle_conns": 100,
+    "show_sql": true
+  }
+}
