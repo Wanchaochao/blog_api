@@ -1,11 +1,11 @@
 package router
 
 import (
-	"blog/core"
-	"blog/debug"
-	"blog/handler/admin"
-	"blog/handler/index"
-	"blog/router/middleware"
+	"blog_api/core"
+	"blog_api/debug"
+	"blog_api/handler/admin"
+	"blog_api/handler/index"
+	"blog_api/router/middleware"
 	"github.com/gin-gonic/gin"
 )
 

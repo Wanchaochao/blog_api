@@ -1,8 +1,8 @@
 package admin
 
 import (
-	"blog/core"
-	"blog/models"
+	"blog_api/core"
+	"blog_api/models"
 	"crypto/md5"
 	"encoding/hex"
 	"github.com/ilibs/gosql"

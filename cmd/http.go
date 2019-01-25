@@ -7,7 +7,7 @@ import (
 	"context"
 	"net/http"
 
-	"blog/router"
+	"blog_api/router"
 
 	"github.com/urfave/cli"
 	"github.com/gin-gonic/gin"

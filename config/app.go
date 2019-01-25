@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"blog/util"
+	"blog_api/util"
 	"fmt"
 	"github.com/fifsky/goconf"
 	"github.com/ilibs/gosql"

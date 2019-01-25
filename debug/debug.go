@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http/pprof"
 
-	"blog/config"
-	"blog/router/middleware"
+	"blog_api/config"
+	"blog_api/router/middleware"
 
 	"github.com/gin-gonic/gin"
 )

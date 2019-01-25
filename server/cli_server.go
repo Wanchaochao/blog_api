@@ -3,8 +3,8 @@ package server
 import (
 	"os"
 	"context"
-	"blog/config"
-	"blog/cmd"
+	"blog_api/config"
+	"blog_api/cmd"
 	"github.com/urfave/cli"
 	"github.com/verystar/golib/osutil"
 )

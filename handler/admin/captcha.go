@@ -1,8 +1,8 @@
 package admin
 
 import (
-	"blog/config"
-	"blog/core"
+	"blog_api/config"
+	"blog_api/core"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"

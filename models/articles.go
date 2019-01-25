@@ -1,7 +1,7 @@
 package models
 
 import (
-	"blog/util"
+	"blog_api/util"
 	"github.com/ilibs/gosql"
 	"time"
 )

@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"blog/config"
-	"blog/core"
-	"blog/models"
+	"blog_api/config"
+	"blog_api/core"
+	"blog_api/models"
 	"github.com/ilibs/gosql"
 )
 

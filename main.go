@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	_ "blog/config"
-	"blog/server"
+	_ "blog_api/config"
+	"blog_api/server"
 	"github.com/ilibs/gosql"
-	"blog/config"
+	"blog_api/config"
 	"io/ioutil"
 	"os"
 	"strconv"
