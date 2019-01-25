@@ -1,11 +1,10 @@
 language: go
 sudo: false
 go:
-- 1.10.x
 - 1.11.x
 
 before_install:
-- go get -t -v ./...
+- export GO111MODULE=on go get -t -v ./...
 
 script:
 - go test -race -coverprofile=coverage.txt -covermode=atomic
