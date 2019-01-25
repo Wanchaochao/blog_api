@@ -1,5 +1,6 @@
 ## 博客后台接口 (www.littlebug.vip)
 
+[![stable](http://littlebug.oss-cn-beijing.aliyuncs.com/www.littlebug.vip/build-passing.svg)](https://github.com/wanchaochao/react-blog)
 [![stable](https://img.shields.io/badge/gin--gonic%2Fgin-1.3.0-green.svg)](https://github.com/gin-gonic/gin)
 [![stable](https://img.shields.io/badge/ilibs-open-brightgreen.svg)](https://github.com/ilibs)
 [![stable](https://img.shields.io/badge/gosql-v1.1.1-brightgreen.svg)](https://github.com/ilibs/gosql)
