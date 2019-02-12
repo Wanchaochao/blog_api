@@ -54,7 +54,7 @@ var Article core.HandlerFunc = func(c *core.Context) core.Response {
 	resp.ArticleEvaluate.PraiseNum = int(praiseNum)
 	resp.ArticleEvaluate.AgainstNum = int(againstNum)
 
-	if err := gosql.Model(&resp.Prev).Where("id < ?", id).Get(); err != nil && err != sql.ErrNoRows {
+	if err := gosql.Model(&resp.Prev).Where("id < ?", id).OrderBy("id desc").Get(); err != nil && err != sql.ErrNoRows {
 		return c.Fail(205, err)
 	}
 	if err := gosql.Model(&resp.Next).Where("id > ?", id).Get(); err != nil && err != sql.ErrNoRows {
